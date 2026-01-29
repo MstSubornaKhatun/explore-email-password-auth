@@ -1,18 +1,21 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../../firebase/firebase.init';
+import { FaEye } from 'react-icons/fa';
 
 
 
 const SignUp = () => {
     const [success, setSuccess] =useState(false);
     const [errorMessage, setErrorMessage] =useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSignUp = e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        const terms = e.target.terms.value;
+        console.log(email, password, terms);
 
         // reset
         setSuccess(false);
@@ -45,8 +48,18 @@ const SignUp = () => {
           <label className="label">Email</label>
           <input type="email" name='email' className="input" placeholder="Email" />
           <label className="label">Password</label>
-          <input type="password" name='password' className="input" placeholder="Password" />
+          <div className='relative'>
+            <input type={showPassword ? 'text' : "password"} name='password' className="input" placeholder="Password" />
+            <button 
+                onClick={()=>{setShowPassword(!showPassword)}}
+            className='btn btn-xs top-2 right-6 absolute'><FaEye></FaEye></button>
+          </div>
           <div><a className="link link-hover">Forgot password?</a></div>
+
+          <label className="label">
+    <input type="checkbox" name='terms' defaultChecked className="checkbox" />
+    Accept Terms and Conditions
+  </label>
           <button className="btn btn-neutral mt-4">Login</button>
         </form>
         {
